@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "promotions",
+  "info": {
+    "singularName": "promotion",
+    "pluralName": "promotions",
+    "displayName": "Promotion",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Grade": {
+      "type": "enumeration",
+      "enum": [
+        "W0-W1",
+        "W1-W2",
+        "W2-W3",
+        "W3-W4",
+        "W4-W5",
+        "W5-W6",
+        "W6-W8",
+        "S1-S2",
+        "S2-S3",
+        "S3-S4",
+        "E0-E1",
+        "E1-E2",
+        "E2-E3",
+        "E3-E4",
+        "E4-E5",
+        "E5-E6",
+        "E6-E7",
+        "E8-E9"
+      ],
+      "required": true
+    },
+    "OrderNo": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "Dated": {
+      "type": "date",
+      "required": true
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "Remarks": {
+      "type": "text",
+      "required": true,
+      "default": "Transfer and posting order uploaded"
+    }
+  }
+}

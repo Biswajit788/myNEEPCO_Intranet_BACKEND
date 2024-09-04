@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "scale_benefits",
+  "info": {
+    "singularName": "scale-benefit",
+    "pluralName": "scale-benefits",
+    "displayName": "ScaleBenefit",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "OrderNo": {
+      "type": "integer",
+      "required": true
+    },
+    "OrderDt": {
+      "type": "date",
+      "required": true
+    },
+    "Description": {
+      "type": "text",
+      "required": true,
+      "default": "Allowed the benefit of scale of next higher grade"
+    },
+    "Grade": {
+      "type": "string",
+      "required": true
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}

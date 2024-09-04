@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "trainings",
+  "info": {
+    "singularName": "training",
+    "pluralName": "trainings",
+    "displayName": "Training",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "OrderNo": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "unique": true
+    },
+    "OrderDt": {
+      "type": "date",
+      "required": true
+    },
+    "Title": {
+      "type": "text",
+      "required": true,
+      "maxLength": 150
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "TDate": {
+      "type": "string",
+      "required": true
+    },
+    "Grade": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

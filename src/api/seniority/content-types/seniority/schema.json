@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "seniorities",
+  "info": {
+    "singularName": "seniority",
+    "pluralName": "seniorities",
+    "displayName": "Seniority"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "OrderNo": {
+      "type": "string",
+      "required": true
+    },
+    "OrderDt": {
+      "type": "date",
+      "required": true
+    },
+    "Description": {
+      "type": "text",
+      "required": true,
+      "maxLength": 150
+    },
+    "File": {
+      "allowedTypes": [
+        "files"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}
