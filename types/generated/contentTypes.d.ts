@@ -788,6 +788,42 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiAnnualGenerationAnnualGeneration
+  extends Schema.CollectionType {
+  collectionName: 'annual_generations';
+  info: {
+    singularName: 'annual-generation';
+    pluralName: 'annual-generations';
+    displayName: 'AnnualGeneration';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Annual Generation Report'>;
+    Year: Attribute.String & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::annual-generation.annual-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::annual-generation.annual-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCircularCircular extends Schema.CollectionType {
   collectionName: 'circulars';
   info: {
@@ -818,6 +854,41 @@ export interface ApiCircularCircular extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::circular.circular',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDailyGenerationDailyGeneration
+  extends Schema.CollectionType {
+  collectionName: 'daily_generations';
+  info: {
+    singularName: 'daily-generation';
+    pluralName: 'daily-generations';
+    displayName: 'DailyGeneration';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Daily Generation Report'>;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::daily-generation.daily-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::daily-generation.daily-generation',
       'oneToOne',
       'admin::user'
     > &
@@ -891,44 +962,52 @@ export interface ApiIncrementIncrement extends Schema.CollectionType {
   };
 }
 
-export interface ApiPowerGenerationReportPowerGenerationReport
+export interface ApiMonthlyGenerationMonthlyGeneration
   extends Schema.CollectionType {
-  collectionName: 'power_generation_reports';
+  collectionName: 'monthly_generations';
   info: {
-    singularName: 'power-generation-report';
-    pluralName: 'power-generation-reports';
-    displayName: 'PowerGenerationReport';
+    singularName: 'monthly-generation';
+    pluralName: 'monthly-generations';
+    displayName: 'MonthlyGeneration';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Type: Attribute.Enumeration<
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Monthly Generation Report'>;
+    Month: Attribute.Enumeration<
       [
-        'Daily Generation Report',
-        'Monthly Generation Report',
-        'Quarterly Generation Report',
-        'Yearly Generation Report'
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
       ]
     > &
       Attribute.Required;
-    Description: Attribute.Text &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        maxLength: 100;
-      }>;
+    Year: Attribute.String & Attribute.Required;
     File: Attribute.Media<'files'> & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::power-generation-report.power-generation-report',
+      'api::monthly-generation.monthly-generation',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::power-generation-report.power-generation-report',
+      'api::monthly-generation.monthly-generation',
       'oneToOne',
       'admin::user'
     > &
@@ -1151,6 +1230,41 @@ export interface ApiTransferTransfer extends Schema.CollectionType {
   };
 }
 
+export interface ApiUpdateUpdate extends Schema.CollectionType {
+  collectionName: 'updates';
+  info: {
+    singularName: 'update';
+    pluralName: 'updates';
+    displayName: 'Update';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text &
+      Attribute.Required &
+      Attribute.DefaultTo<'Name of the Related Parties of NEEPCO as per Companies Act, 2013'>;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::update.update',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::update.update',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiVigilanceVigilance extends Schema.CollectionType {
   collectionName: 'vigilances';
   info: {
@@ -1205,15 +1319,18 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::annual-generation.annual-generation': ApiAnnualGenerationAnnualGeneration;
       'api::circular.circular': ApiCircularCircular;
+      'api::daily-generation.daily-generation': ApiDailyGenerationDailyGeneration;
       'api::form.form': ApiFormForm;
       'api::increment.increment': ApiIncrementIncrement;
-      'api::power-generation-report.power-generation-report': ApiPowerGenerationReportPowerGenerationReport;
+      'api::monthly-generation.monthly-generation': ApiMonthlyGenerationMonthlyGeneration;
       'api::promotion.promotion': ApiPromotionPromotion;
       'api::scale-benefit.scale-benefit': ApiScaleBenefitScaleBenefit;
       'api::seniority.seniority': ApiSenioritySeniority;
       'api::training.training': ApiTrainingTraining;
       'api::transfer.transfer': ApiTransferTransfer;
+      'api::update.update': ApiUpdateUpdate;
       'api::vigilance.vigilance': ApiVigilanceVigilance;
     }
   }
