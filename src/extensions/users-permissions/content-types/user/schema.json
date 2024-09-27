@@ -65,10 +65,17 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "ecode": {
+    "firstname": {
       "type": "string",
-      "required": true,
-      "unique": true
+      "required": true
+    },
+    "lastname": {
+      "type": "string",
+      "required": true
+    },
+    "dob": {
+      "type": "date",
+      "required": true
     }
   }
 }

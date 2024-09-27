@@ -723,7 +723,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    ecode: Attribute.String & Attribute.Required & Attribute.Unique;
+    firstname: Attribute.String & Attribute.Required;
+    lastname: Attribute.String & Attribute.Required;
+    dob: Attribute.Date & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -781,6 +783,37 @@ export interface PluginI18NLocale extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAccoladeAccolade extends Schema.CollectionType {
+  collectionName: 'accolades';
+  info: {
+    singularName: 'accolade';
+    pluralName: 'accolades';
+    displayName: 'Accolade';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::accolade.accolade',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::accolade.accolade',
       'oneToOne',
       'admin::user'
     > &
@@ -861,6 +894,39 @@ export interface ApiCircularCircular extends Schema.CollectionType {
   };
 }
 
+export interface ApiCpRuleCpRule extends Schema.CollectionType {
+  collectionName: 'cp_rules';
+  info: {
+    singularName: 'cp-rule';
+    pluralName: 'cp-rules';
+    displayName: 'CpRule';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    File1: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::cp-rule.cp-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::cp-rule.cp-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDailyGenerationDailyGeneration
   extends Schema.CollectionType {
   collectionName: 'daily_generations';
@@ -889,6 +955,74 @@ export interface ApiDailyGenerationDailyGeneration
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::daily-generation.daily-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDisposalRuleDisposalRule extends Schema.CollectionType {
+  collectionName: 'disposal_rules';
+  info: {
+    singularName: 'disposal-rule';
+    pluralName: 'disposal-rules';
+    displayName: 'DisposalRule';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    File1: Attribute.Media<'files'> & Attribute.Private;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::disposal-rule.disposal-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::disposal-rule.disposal-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDopRuleDopRule extends Schema.CollectionType {
+  collectionName: 'dop_rules';
+  info: {
+    singularName: 'dop-rule';
+    pluralName: 'dop-rules';
+    displayName: 'DopRules';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    File1: Attribute.Media<'files'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dop-rule.dop-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dop-rule.dop-rule',
       'oneToOne',
       'admin::user'
     > &
@@ -958,6 +1092,30 @@ export interface ApiIncrementIncrement extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiIsoIso extends Schema.CollectionType {
+  collectionName: 'isos';
+  info: {
+    singularName: 'iso';
+    pluralName: 'isos';
+    displayName: 'ISO';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::iso.iso', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::iso.iso', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1319,11 +1477,16 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::accolade.accolade': ApiAccoladeAccolade;
       'api::annual-generation.annual-generation': ApiAnnualGenerationAnnualGeneration;
       'api::circular.circular': ApiCircularCircular;
+      'api::cp-rule.cp-rule': ApiCpRuleCpRule;
       'api::daily-generation.daily-generation': ApiDailyGenerationDailyGeneration;
+      'api::disposal-rule.disposal-rule': ApiDisposalRuleDisposalRule;
+      'api::dop-rule.dop-rule': ApiDopRuleDopRule;
       'api::form.form': ApiFormForm;
       'api::increment.increment': ApiIncrementIncrement;
+      'api::iso.iso': ApiIsoIso;
       'api::monthly-generation.monthly-generation': ApiMonthlyGenerationMonthlyGeneration;
       'api::promotion.promotion': ApiPromotionPromotion;
       'api::scale-benefit.scale-benefit': ApiScaleBenefitScaleBenefit;

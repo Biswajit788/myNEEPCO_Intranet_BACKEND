@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "isos",
+  "info": {
+    "singularName": "iso",
+    "pluralName": "isos",
+    "displayName": "ISO",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "text",
+      "required": true
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}
