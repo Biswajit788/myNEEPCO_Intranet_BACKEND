@@ -11,6 +11,24 @@ module.exports = {
     },
     {
       method: 'POST',
+      path: '/auth/verify-otp',
+      handler: 'auth-custom.verifyOtp',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'POST',
+      path: '/auth/resend-otp',
+      handler: 'auth-custom.resendOtp',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'POST',
       path: '/auth/forgot-password',
       handler: 'auth-custom.forgotPassword', // Ensure this matches the controller method
       config: {

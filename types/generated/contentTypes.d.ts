@@ -726,6 +726,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     firstname: Attribute.String & Attribute.Required;
     lastname: Attribute.String & Attribute.Required;
     dob: Attribute.Date & Attribute.Required;
+    otp: Attribute.Integer & Attribute.Private;
+    otpExpiry: Attribute.DateTime & Attribute.Private;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1030,6 +1032,31 @@ export interface ApiDopRuleDopRule extends Schema.CollectionType {
   };
 }
 
+export interface ApiErpErp extends Schema.CollectionType {
+  collectionName: 'erps';
+  info: {
+    singularName: 'erp';
+    pluralName: 'erps';
+    displayName: 'ERP';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String & Attribute.Required;
+    Module: Attribute.Enumeration<['DMS', 'FICO', 'FLM', 'HCM', 'MM', 'SD']> &
+      Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::erp.erp', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::erp.erp', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiFormForm extends Schema.CollectionType {
   collectionName: 'forms';
   info: {
@@ -1116,6 +1143,40 @@ export interface ApiIsoIso extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::iso.iso', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::iso.iso', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiItPolicyItPolicy extends Schema.CollectionType {
+  collectionName: 'it_policies';
+  info: {
+    singularName: 'it-policy';
+    pluralName: 'it-policies';
+    displayName: 'ITPolicy';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String & Attribute.Required;
+    Category: Attribute.Enumeration<['IT ', 'Website', 'NCSP']> &
+      Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::it-policy.it-policy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::it-policy.it-policy',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -1225,6 +1286,46 @@ export interface ApiPromotionPromotion extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::promotion.promotion',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuarterlyGenerationQuarterlyGeneration
+  extends Schema.CollectionType {
+  collectionName: 'quarterly_generations';
+  info: {
+    singularName: 'quarterly-generation';
+    pluralName: 'quarterly-generations';
+    displayName: 'QuarterlyGeneration';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Quarterly Generation Report'>;
+    Quarter: Attribute.Enumeration<
+      ['Jan-Mar', 'Apr-Jun', 'Jul-Sep', 'Oct-Dec']
+    > &
+      Attribute.Required;
+    Year: Attribute.String & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::quarterly-generation.quarterly-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::quarterly-generation.quarterly-generation',
       'oneToOne',
       'admin::user'
     > &
@@ -1484,11 +1585,14 @@ declare module '@strapi/types' {
       'api::daily-generation.daily-generation': ApiDailyGenerationDailyGeneration;
       'api::disposal-rule.disposal-rule': ApiDisposalRuleDisposalRule;
       'api::dop-rule.dop-rule': ApiDopRuleDopRule;
+      'api::erp.erp': ApiErpErp;
       'api::form.form': ApiFormForm;
       'api::increment.increment': ApiIncrementIncrement;
       'api::iso.iso': ApiIsoIso;
+      'api::it-policy.it-policy': ApiItPolicyItPolicy;
       'api::monthly-generation.monthly-generation': ApiMonthlyGenerationMonthlyGeneration;
       'api::promotion.promotion': ApiPromotionPromotion;
+      'api::quarterly-generation.quarterly-generation': ApiQuarterlyGenerationQuarterlyGeneration;
       'api::scale-benefit.scale-benefit': ApiScaleBenefitScaleBenefit;
       'api::seniority.seniority': ApiSenioritySeniority;
       'api::training.training': ApiTrainingTraining;

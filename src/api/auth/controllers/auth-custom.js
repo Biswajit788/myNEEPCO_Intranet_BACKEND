@@ -5,7 +5,7 @@ module.exports = {
         const { username, password } = ctx.request.body;
 
         if (!username || !password) {
-            console.error('Missing ecode or password');
+            console.error('Missing employee code or password');
             return ctx.badRequest('Employee code and password are required');
         }
 
@@ -22,28 +22,29 @@ module.exports = {
                 return ctx.unauthorized('Invalid password');
             }
 
-            const token = strapi.plugin('users-permissions').service('jwt').issue(
-                {
-                    id: user.id,
-                    username: user.username,
-                    email: user.email,
-                    fname: user.firstname,
-                    lname: user.lastname,
-                    dob: user.dob,
-                    role: user.role,
-                }
-            );
+            // Step 1: Generate OTP
+            const otp = crypto.randomInt(100000, 999999); // 6-digit OTP
+            const otpExpiry = Date.now() + 2 * 60 * 1000; // OTP valid for 2 minutes
 
-            /*  const sanitizedUser = {
-                 id: user.id,
-                 username: user.username,
-                 email: user.email,
-                 ecode: user.ecode,
-                 // Add any other fields you want to include, excluding sensitive ones like password
-             }; */
+            // Step 2: Store OTP and expiry in the user record
+            await strapi.query('plugin::users-permissions.user').update({
+                where: { id: user.id },
+                data: {
+                    otp: otp,
+                    otpExpiry: otpExpiry,
+                },
+            });
+
+            // Step 3: Send OTP via email using Strapi's email plugin
+            await strapi.plugins['email'].service('email').send({
+                to: user.email,
+                subject: 'OTP Code for Login',
+                text: `Your OTP code for login to myNEEPCO Intranet is ${otp}. It will expire in 2 minutes.`,
+                html: `<p>Your OTP code for login to myNEEPCO Intranet is <strong>${otp}</strong>. It will expire in 2 minutes.</p>`,
+            });
+
             ctx.send({
-                jwt: token,
-                //user: sanitizedUser,
+                message: 'OTP sent successfully. Please check your email to complete login.',
             });
 
         } catch (error) {
@@ -52,6 +53,61 @@ module.exports = {
             ctx.internalServerError('Internal server error occurred');
         }
     },
+
+    async verifyOtp(ctx) {
+        const { username, otp } = ctx.request.body;
+
+        if (!username || !otp) {
+            return ctx.badRequest('Username and OTP are required');
+        }
+
+        try {
+            // Step 1: Find the user by username
+            const user = await strapi.query('plugin::users-permissions.user').findOne({ where: { username } });
+
+            if (!user) {
+                return ctx.badRequest('Invalid username');
+            }
+
+            // Convert otpExpiry to milliseconds for comparison
+            const otpExpiryTimestamp = new Date(user.otpExpiry).getTime();
+
+            // Step 2: Check if OTP matches and is not expired
+            if (String(user.otp) !== String(otp) || Date.now() > otpExpiryTimestamp) {
+                console.log('OTP verification failed. User OTP:', user.otp, 'Provided OTP:', otp);
+                return ctx.unauthorized('Invalid or expired OTP');
+            }
+
+            // Step 3: Clear the OTP fields after successful verification
+            await strapi.query('plugin::users-permissions.user').update({
+                where: { id: user.id },
+                data: {
+                    otp: null,
+                    otpExpiry: null,
+                },
+            });
+
+            // Step 4: Issue the JWT token
+            const token = strapi.plugin('users-permissions').service('jwt').issue({
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                fname: user.firstname,
+                lname: user.lastname,
+                dob: user.dob,
+                role: user.role,
+            });
+
+            ctx.send({
+                jwt: token,
+            });
+
+        } catch (error) {
+            console.error('Error inside verifyOtp try block:', error.message);
+            console.error('Stack trace:', error.stack);
+            ctx.internalServerError('Internal server error occurred');
+        }
+    },    
 
     async forgotPassword(ctx) {
         const { email } = ctx.request.body;
@@ -101,7 +157,6 @@ module.exports = {
             <span style="color: gray; font-size: 12px; font-style: italic; display: block; margin-top: 10px;">
                 Please note: This is an automated message. Do not reply to this email. If you need assistance, please contact the Corporate IT Department at <a href="mailto:itshillong@neepco.co.in">itshillong@neepco.co.in</a>.
             </span>
-
         `;
             // Send the email
             await strapi.plugin('email').service('email').send({
@@ -115,6 +170,54 @@ module.exports = {
 
         } catch (error) {
             console.error('Error during password reset:', error.message);
+            ctx.internalServerError('Internal server error occurred');
+        }
+    },
+
+    async resendOtp(ctx) {
+        const { username } = ctx.request.body;
+
+        // Check if username is provided
+        if (!username) {
+            return ctx.badRequest('Username is required');
+        }
+
+        try {
+            // Fetch the user by username
+            const user = await strapi.query('plugin::users-permissions.user').findOne({ where: { username } });
+
+            if (!user) {
+                return ctx.badRequest('User not found');
+            }
+
+            // Step 1: Generate a new OTP
+            const otp = crypto.randomInt(100000, 999999); // 6-digit OTP
+            const otpExpiry = Date.now() + 2 * 60 * 1000; // OTP valid for 2 minutes
+
+            // Step 2: Store new OTP and expiry in the user record
+            await strapi.query('plugin::users-permissions.user').update({
+                where: { id: user.id },
+                data: {
+                    otp: otp,
+                    otpExpiry: otpExpiry,
+                },
+            });
+
+            // Step 3: Send OTP via email using Strapi's email plugin
+            await strapi.plugins['email'].service('email').send({
+                to: user.email,
+                subject: 'OTP Code for Login',
+                text: `Your OTP code for login to myNEEPCO Intranet is ${otp}. It will expire in 2 minutes.`,
+                html: `<p>Your OTP code for login to myNEEPCO Intranet is <strong>${otp}</strong>. It will expire in 2 minutes.</p>`,
+            });
+
+            ctx.send({
+                message: 'New OTP sent successfully. Please check your email.',
+            });
+
+        } catch (error) {
+            console.error('Error inside resendOtp try block:', error.message);
+            console.error('Stack trace:', error.stack);
             ctx.internalServerError('Internal server error occurred');
         }
     },

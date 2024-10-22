@@ -76,6 +76,14 @@
     "dob": {
       "type": "date",
       "required": true
+    },
+    "otp": {
+      "type": "integer",
+      "private": true
+    },
+    "otpExpiry": {
+      "type": "datetime",
+      "private": true
     }
   }
 }

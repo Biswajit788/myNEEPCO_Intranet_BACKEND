@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quarterly_generations",
+  "info": {
+    "singularName": "quarterly-generation",
+    "pluralName": "quarterly-generations",
+    "displayName": "QuarterlyGeneration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true,
+      "default": "Quarterly Generation Report"
+    },
+    "Quarter": {
+      "type": "enumeration",
+      "enum": [
+        "Jan-Mar",
+        "Apr-Jun",
+        "Jul-Sep",
+        "Oct-Dec"
+      ],
+      "required": true
+    },
+    "Year": {
+      "type": "string",
+      "required": true
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "it_policies",
+  "info": {
+    "singularName": "it-policy",
+    "pluralName": "it-policies",
+    "displayName": "ITPolicy",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Category": {
+      "type": "enumeration",
+      "enum": [
+        "IT ",
+        "Website",
+        "NCSP"
+      ],
+      "required": true
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}
