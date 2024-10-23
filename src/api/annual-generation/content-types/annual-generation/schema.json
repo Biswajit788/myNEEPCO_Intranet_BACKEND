@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "annual_generations",
+  "info": {
+    "singularName": "annual-generation",
+    "pluralName": "annual-generations",
+    "displayName": "AnnualGeneration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "default": "Annual Generation Report",
+      "required": true
+    },
+    "Year": {
+      "type": "string",
+      "required": true
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}

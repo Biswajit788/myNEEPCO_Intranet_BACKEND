@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "daily_generations",
+  "info": {
+    "singularName": "daily-generation",
+    "pluralName": "daily-generations",
+    "displayName": "DailyGeneration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true,
+      "default": "Daily Generation Report"
+    },
+    "Dated": {
+      "type": "date",
+      "required": true
+    },
+    "File": {
+      "allowedTypes": [
+        "files"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

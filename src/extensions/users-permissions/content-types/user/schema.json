@@ -65,10 +65,25 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "ecode": {
+    "firstname": {
       "type": "string",
-      "required": true,
-      "unique": true
+      "required": true
+    },
+    "lastname": {
+      "type": "string",
+      "required": true
+    },
+    "dob": {
+      "type": "date",
+      "required": true
+    },
+    "otp": {
+      "type": "integer",
+      "private": true
+    },
+    "otpExpiry": {
+      "type": "datetime",
+      "private": true
     }
   }
 }

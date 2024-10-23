@@ -7,11 +7,11 @@ module.exports = ({ env }) => {
   const connections = {
     mysql: {
       connection: {
-        host: env('DATABASE_HOST', '10.3.0.57'),
+        host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 3306),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
+        database: env('DATABASE_NAME', 'strapi_db'),
+        user: env('DATABASE_USERNAME', 'strapi_user'),
+        password: env('DATABASE_PASSWORD'),
         ssl: env.bool('DATABASE_SSL', false) ? {
           key: env('DATABASE_SSL_KEY') && fs.readFileSync(env('DATABASE_SSL_KEY'), 'utf8'),
           cert: env('DATABASE_SSL_CERT') && fs.readFileSync(env('DATABASE_SSL_CERT'), 'utf8'),
@@ -24,12 +24,12 @@ module.exports = ({ env }) => {
         max: env.int('DATABASE_POOL_MAX', 10),
       },
     },
-    sqlite: {
+    /* sqlite: {
       connection: {
         filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
       },
       useNullAsDefault: true,
-    },
+    }, */
   };
 
   return {

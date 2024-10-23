@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "monthly_generations",
+  "info": {
+    "singularName": "monthly-generation",
+    "pluralName": "monthly-generations",
+    "displayName": "MonthlyGeneration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "default": "Monthly Generation Report",
+      "required": true
+    },
+    "Month": {
+      "type": "enumeration",
+      "enum": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "required": true
+    },
+    "Year": {
+      "type": "string",
+      "required": true
+    },
+    "File": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}

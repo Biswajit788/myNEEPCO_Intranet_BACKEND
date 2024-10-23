@@ -723,7 +723,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    ecode: Attribute.String & Attribute.Required & Attribute.Unique;
+    firstname: Attribute.String & Attribute.Required;
+    lastname: Attribute.String & Attribute.Required;
+    dob: Attribute.Date & Attribute.Required;
+    otp: Attribute.Integer & Attribute.Private;
+    otpExpiry: Attribute.DateTime & Attribute.Private;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -788,6 +792,73 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiAccoladeAccolade extends Schema.CollectionType {
+  collectionName: 'accolades';
+  info: {
+    singularName: 'accolade';
+    pluralName: 'accolades';
+    displayName: 'Accolade';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::accolade.accolade',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::accolade.accolade',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAnnualGenerationAnnualGeneration
+  extends Schema.CollectionType {
+  collectionName: 'annual_generations';
+  info: {
+    singularName: 'annual-generation';
+    pluralName: 'annual-generations';
+    displayName: 'AnnualGeneration';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Annual Generation Report'>;
+    Year: Attribute.String & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::annual-generation.annual-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::annual-generation.annual-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCircularCircular extends Schema.CollectionType {
   collectionName: 'circulars';
   info: {
@@ -821,6 +892,167 @@ export interface ApiCircularCircular extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCpRuleCpRule extends Schema.CollectionType {
+  collectionName: 'cp_rules';
+  info: {
+    singularName: 'cp-rule';
+    pluralName: 'cp-rules';
+    displayName: 'CpRule';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    File1: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::cp-rule.cp-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::cp-rule.cp-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDailyGenerationDailyGeneration
+  extends Schema.CollectionType {
+  collectionName: 'daily_generations';
+  info: {
+    singularName: 'daily-generation';
+    pluralName: 'daily-generations';
+    displayName: 'DailyGeneration';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Daily Generation Report'>;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::daily-generation.daily-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::daily-generation.daily-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDisposalRuleDisposalRule extends Schema.CollectionType {
+  collectionName: 'disposal_rules';
+  info: {
+    singularName: 'disposal-rule';
+    pluralName: 'disposal-rules';
+    displayName: 'DisposalRule';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    File1: Attribute.Media<'files'> & Attribute.Private;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::disposal-rule.disposal-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::disposal-rule.disposal-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDopRuleDopRule extends Schema.CollectionType {
+  collectionName: 'dop_rules';
+  info: {
+    singularName: 'dop-rule';
+    pluralName: 'dop-rules';
+    displayName: 'DopRules';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text & Attribute.Required;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    File1: Attribute.Media<'files'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dop-rule.dop-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dop-rule.dop-rule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiErpErp extends Schema.CollectionType {
+  collectionName: 'erps';
+  info: {
+    singularName: 'erp';
+    pluralName: 'erps';
+    displayName: 'ERP';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String & Attribute.Required;
+    Module: Attribute.Enumeration<['DMS', 'FICO', 'FLM', 'HCM', 'MM', 'SD']> &
+      Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::erp.erp', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::erp.erp', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -891,44 +1123,110 @@ export interface ApiIncrementIncrement extends Schema.CollectionType {
   };
 }
 
-export interface ApiPowerGenerationReportPowerGenerationReport
-  extends Schema.CollectionType {
-  collectionName: 'power_generation_reports';
+export interface ApiIsoIso extends Schema.CollectionType {
+  collectionName: 'isos';
   info: {
-    singularName: 'power-generation-report';
-    pluralName: 'power-generation-reports';
-    displayName: 'PowerGenerationReport';
+    singularName: 'iso';
+    pluralName: 'isos';
+    displayName: 'ISO';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Type: Attribute.Enumeration<
-      [
-        'Daily Generation Report',
-        'Monthly Generation Report',
-        'Quarterly Generation Report',
-        'Yearly Generation Report'
-      ]
-    > &
+    Title: Attribute.Text & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::iso.iso', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::iso.iso', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiItPolicyItPolicy extends Schema.CollectionType {
+  collectionName: 'it_policies';
+  info: {
+    singularName: 'it-policy';
+    pluralName: 'it-policies';
+    displayName: 'ITPolicy';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String & Attribute.Required;
+    Category: Attribute.Enumeration<['IT ', 'Website', 'NCSP']> &
       Attribute.Required;
-    Description: Attribute.Text &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        maxLength: 100;
-      }>;
     File: Attribute.Media<'files'> & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::power-generation-report.power-generation-report',
+      'api::it-policy.it-policy',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::power-generation-report.power-generation-report',
+      'api::it-policy.it-policy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMonthlyGenerationMonthlyGeneration
+  extends Schema.CollectionType {
+  collectionName: 'monthly_generations';
+  info: {
+    singularName: 'monthly-generation';
+    pluralName: 'monthly-generations';
+    displayName: 'MonthlyGeneration';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Monthly Generation Report'>;
+    Month: Attribute.Enumeration<
+      [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ]
+    > &
+      Attribute.Required;
+    Year: Attribute.String & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::monthly-generation.monthly-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::monthly-generation.monthly-generation',
       'oneToOne',
       'admin::user'
     > &
@@ -988,6 +1286,46 @@ export interface ApiPromotionPromotion extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::promotion.promotion',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuarterlyGenerationQuarterlyGeneration
+  extends Schema.CollectionType {
+  collectionName: 'quarterly_generations';
+  info: {
+    singularName: 'quarterly-generation';
+    pluralName: 'quarterly-generations';
+    displayName: 'QuarterlyGeneration';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Quarterly Generation Report'>;
+    Quarter: Attribute.Enumeration<
+      ['Jan-Mar', 'Apr-Jun', 'Jul-Sep', 'Oct-Dec']
+    > &
+      Attribute.Required;
+    Year: Attribute.String & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::quarterly-generation.quarterly-generation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::quarterly-generation.quarterly-generation',
       'oneToOne',
       'admin::user'
     > &
@@ -1151,6 +1489,41 @@ export interface ApiTransferTransfer extends Schema.CollectionType {
   };
 }
 
+export interface ApiUpdateUpdate extends Schema.CollectionType {
+  collectionName: 'updates';
+  info: {
+    singularName: 'update';
+    pluralName: 'updates';
+    displayName: 'Update';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.Text &
+      Attribute.Required &
+      Attribute.DefaultTo<'Name of the Related Parties of NEEPCO as per Companies Act, 2013'>;
+    Dated: Attribute.Date & Attribute.Required;
+    File: Attribute.Media<'files'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::update.update',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::update.update',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiVigilanceVigilance extends Schema.CollectionType {
   collectionName: 'vigilances';
   info: {
@@ -1205,15 +1578,26 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::accolade.accolade': ApiAccoladeAccolade;
+      'api::annual-generation.annual-generation': ApiAnnualGenerationAnnualGeneration;
       'api::circular.circular': ApiCircularCircular;
+      'api::cp-rule.cp-rule': ApiCpRuleCpRule;
+      'api::daily-generation.daily-generation': ApiDailyGenerationDailyGeneration;
+      'api::disposal-rule.disposal-rule': ApiDisposalRuleDisposalRule;
+      'api::dop-rule.dop-rule': ApiDopRuleDopRule;
+      'api::erp.erp': ApiErpErp;
       'api::form.form': ApiFormForm;
       'api::increment.increment': ApiIncrementIncrement;
-      'api::power-generation-report.power-generation-report': ApiPowerGenerationReportPowerGenerationReport;
+      'api::iso.iso': ApiIsoIso;
+      'api::it-policy.it-policy': ApiItPolicyItPolicy;
+      'api::monthly-generation.monthly-generation': ApiMonthlyGenerationMonthlyGeneration;
       'api::promotion.promotion': ApiPromotionPromotion;
+      'api::quarterly-generation.quarterly-generation': ApiQuarterlyGenerationQuarterlyGeneration;
       'api::scale-benefit.scale-benefit': ApiScaleBenefitScaleBenefit;
       'api::seniority.seniority': ApiSenioritySeniority;
       'api::training.training': ApiTrainingTraining;
       'api::transfer.transfer': ApiTransferTransfer;
+      'api::update.update': ApiUpdateUpdate;
       'api::vigilance.vigilance': ApiVigilanceVigilance;
     }
   }

@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cp_rules",
+  "info": {
+    "singularName": "cp-rule",
+    "pluralName": "cp-rules",
+    "displayName": "CpRule"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "text",
+      "required": true
+    },
+    "Dated": {
+      "type": "date",
+      "required": true
+    },
+    "File": {
+      "allowedTypes": [
+        "files"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "File1": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
