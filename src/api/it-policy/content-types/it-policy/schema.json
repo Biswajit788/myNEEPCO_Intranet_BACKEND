@@ -21,7 +21,7 @@
       "enum": [
         "IT ",
         "Website",
-        "NCSP"
+        "Security"
       ],
       "required": true
     },

@@ -23,7 +23,7 @@
     "Description": {
       "type": "text",
       "required": true,
-      "maxLength": 200
+      "default": "Annual Increment @3% in their respective scale of pay"
     },
     "File": {
       "type": "media",

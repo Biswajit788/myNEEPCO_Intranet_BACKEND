@@ -24,8 +24,7 @@
     },
     "Title": {
       "type": "text",
-      "required": true,
-      "maxLength": 150
+      "required": true
     },
     "File": {
       "type": "media",
@@ -36,10 +35,6 @@
       ]
     },
     "TDate": {
-      "type": "string",
-      "required": true
-    },
-    "Grade": {
       "type": "string",
       "required": true
     }

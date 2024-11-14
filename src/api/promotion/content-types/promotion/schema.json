@@ -18,28 +18,29 @@
         "W0-W1",
         "W1-W2",
         "W2-W3",
-        "W3-W4",
-        "W4-W5",
+        "W3-W5",
         "W5-W6",
         "W6-W8",
+        "W8-S1",
         "S1-S2",
         "S2-S3",
-        "S3-S4",
-        "E0-E1",
+        "S3-E1",
         "E1-E2",
         "E2-E3",
         "E3-E4",
         "E4-E5",
         "E5-E6",
         "E6-E7",
-        "E8-E9"
+        "E7-E8",
+        "E8-E9",
+        "Existing Grade"
       ],
       "required": true
     },
     "OrderNo": {
       "type": "integer",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "Dated": {
       "type": "date",
