@@ -3,29 +3,69 @@ const crypto = require('crypto');
 module.exports = {
     async loginWithEmployeeCode(ctx) {
         const { username, password } = ctx.request.body;
-
+    
         if (!username || !password) {
             console.error('Missing employee code or password');
             return ctx.badRequest('Employee code and password are required');
         }
-
+    
         try {
             const user = await strapi.query('plugin::users-permissions.user').findOne({ where: { username } });
-
+    
             if (!user) {
                 return ctx.badRequest('Invalid employee code');
             }
-
+    
+            // Parse lockout_time to Date object for comparison
+            const lockoutTime = user.lockout_time ? new Date(user.lockout_time) : null;
+            console.log('User lockout_time:', lockoutTime); // Log parsed date for verification
+    
+            // Check if the user is locked and if lockout time is still valid
+            if (user.failed_attempts >= 5 && lockoutTime && Date.now() < lockoutTime.getTime()) {
+                const remainingLockTime = Math.ceil((lockoutTime.getTime() - Date.now()) / 1000 / 60); // Time in minutes
+                console.log(`Account is locked. Try again in ${remainingLockTime} minute(s).`);
+    
+                // Return error with status code 429 (Too Many Requests)
+                return ctx.send({
+                    message: `Account is locked. Try again in ${remainingLockTime} minute(s).`,
+                    code: 'ACCOUNT_LOCKED', // Custom error code for better identification
+                }, 429);               
+            }
+    
+            // Proceed with password validation if lockout has expired or is not set
             const validPassword = await strapi.plugin('users-permissions').service('user').validatePassword(password, user.password);
-
+    
             if (!validPassword) {
+                // Increment failed login attempts and lock account if necessary
+                let updatedData = {
+                    failed_attempts: user.failed_attempts + 1,
+                };
+    
+                if (updatedData.failed_attempts >= 5) {
+                    updatedData.lockout_time = Date.now() + 10 * 60 * 1000; // Lock for 10 minutes
+                }
+    
+                await strapi.query('plugin::users-permissions.user').update({
+                    where: { id: user.id },
+                    data: updatedData
+                });
+    
                 return ctx.unauthorized('Invalid password');
             }
-
+    
+            // Reset failed attempts and lockout time if login is successful
+            await strapi.query('plugin::users-permissions.user').update({
+                where: { id: user.id },
+                data: {
+                    failed_attempts: 0,
+                    lockout_time: null, // Clear lockout time
+                }
+            });
+    
             // Step 1: Generate OTP
             const otp = crypto.randomInt(100000, 999999); // 6-digit OTP
             const otpExpiry = Date.now() + 2 * 60 * 1000; // OTP valid for 2 minutes
-
+    
             // Step 2: Store OTP and expiry in the user record
             await strapi.query('plugin::users-permissions.user').update({
                 where: { id: user.id },
@@ -34,7 +74,7 @@ module.exports = {
                     otpExpiry: otpExpiry,
                 },
             });
-
+    
             // Step 3: Send OTP via email using Strapi's email plugin
             await strapi.plugins['email'].service('email').send({
                 to: user.email,
@@ -42,11 +82,11 @@ module.exports = {
                 text: `Your OTP code for login to myNEEPCO Intranet is ${otp}. It will expire in 2 minutes.`,
                 html: `<p>Your OTP code for login to myNEEPCO Intranet is <strong>${otp}</strong>. It will expire in 2 minutes.</p>`,
             });
-
+    
             ctx.send({
                 message: 'OTP sent successfully. Please check your email to complete login.',
             });
-
+    
         } catch (error) {
             console.error('Error inside try block:', error.message);
             console.error('Stack trace:', error.stack);
@@ -107,7 +147,7 @@ module.exports = {
             console.error('Stack trace:', error.stack);
             ctx.internalServerError('Internal server error occurred');
         }
-    },    
+    },
 
     async forgotPassword(ctx) {
         const { email } = ctx.request.body;

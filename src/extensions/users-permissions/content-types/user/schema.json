@@ -84,6 +84,12 @@
     "otpExpiry": {
       "type": "datetime",
       "private": true
+    },
+    "failed_attempts": {
+      "type": "integer"
+    },
+    "lockout_time": {
+      "type": "datetime"
     }
   }
 }

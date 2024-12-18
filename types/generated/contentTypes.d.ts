@@ -728,6 +728,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     dob: Attribute.Date & Attribute.Required;
     otp: Attribute.Integer & Attribute.Private;
     otpExpiry: Attribute.DateTime & Attribute.Private;
+    failed_attempts: Attribute.Integer;
+    lockout_time: Attribute.DateTime;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

@@ -1,3 +1,4 @@
+const rateLimit = require('../src/middlewares/rateLimit')
 module.exports = [
   'strapi::logger',
   'strapi::errors',
@@ -9,6 +10,10 @@ module.exports = [
       headers: '*',
     },
   },
+  {
+    name: 'global::rateLimit',
+    config: {},
+  }, 
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
