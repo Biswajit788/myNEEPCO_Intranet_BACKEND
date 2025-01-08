@@ -8,8 +8,8 @@ const RateLimit = require('koa2-ratelimit').RateLimit;
 module.exports = (config, { strapi }) => {
   // Default configuration for rate-limiting
   const {
-    interval = { min: 10 }, // Time window in minutes
-    max = 100, // Maximum requests per interval
+    interval = { min: 15 }, // Time window in minutes
+    max = 1000, // Maximum requests per interval
     message = 'You have exceeded the maximum number of requests. Please try again later.',
     keyGenerator = (ctx) => ctx.ip, // Use IP address as the default key
   } = config;

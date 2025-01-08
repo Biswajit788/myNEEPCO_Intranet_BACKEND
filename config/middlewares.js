@@ -1,4 +1,3 @@
-const rateLimit = require('../src/middlewares/rateLimit')
 module.exports = [
   'strapi::logger',
   'strapi::errors',
@@ -12,12 +11,20 @@ module.exports = [
   },
   {
     name: 'global::rateLimit',
-    config: {},
-  }, 
+    config: {
+      // Add any configuration options for rateLimit middleware
+    },
+  },
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
   'strapi::session',
   'strapi::favicon',
-  'strapi::public',
+  {
+    name: 'global::protectUploads',
+    config: {
+      // Add any configuration options for protectUploads middleware
+    },
+  },
+  'strapi::public', 
 ];
