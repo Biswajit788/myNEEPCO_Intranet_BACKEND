@@ -728,6 +728,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     dob: Attribute.Date & Attribute.Required;
     otp: Attribute.Integer & Attribute.Private;
     otpExpiry: Attribute.DateTime & Attribute.Private;
+    failed_attempts: Attribute.Integer;
+    lockout_time: Attribute.DateTime;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -902,6 +904,7 @@ export interface ApiCpRuleCpRule extends Schema.CollectionType {
     singularName: 'cp-rule';
     pluralName: 'cp-rules';
     displayName: 'CpRule';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -910,7 +913,7 @@ export interface ApiCpRuleCpRule extends Schema.CollectionType {
     Title: Attribute.Text & Attribute.Required;
     Dated: Attribute.Date & Attribute.Required;
     File: Attribute.Media<'files'> & Attribute.Required;
-    File1: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    File1: Attribute.Media<'files', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -979,7 +982,7 @@ export interface ApiDisposalRuleDisposalRule extends Schema.CollectionType {
     Title: Attribute.Text & Attribute.Required;
     Dated: Attribute.Date & Attribute.Required;
     File: Attribute.Media<'files'> & Attribute.Required;
-    File1: Attribute.Media<'files'> & Attribute.Private;
+    File1: Attribute.Media<'files', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1013,7 +1016,7 @@ export interface ApiDopRuleDopRule extends Schema.CollectionType {
     Title: Attribute.Text & Attribute.Required;
     Dated: Attribute.Date & Attribute.Required;
     File: Attribute.Media<'files'> & Attribute.Required;
-    File1: Attribute.Media<'files'>;
+    File1: Attribute.Media<'files', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1080,6 +1083,38 @@ export interface ApiFormForm extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::form.form', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::form.form', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGalleryGallery extends Schema.CollectionType {
+  collectionName: 'galleries';
+  info: {
+    singularName: 'gallery';
+    pluralName: 'galleries';
+    displayName: 'Gallery';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    image: Attribute.Media<'images'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::gallery.gallery',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::gallery.gallery',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -1587,6 +1622,7 @@ declare module '@strapi/types' {
       'api::dop-rule.dop-rule': ApiDopRuleDopRule;
       'api::erp.erp': ApiErpErp;
       'api::form.form': ApiFormForm;
+      'api::gallery.gallery': ApiGalleryGallery;
       'api::increment.increment': ApiIncrementIncrement;
       'api::iso.iso': ApiIsoIso;
       'api::it-policy.it-policy': ApiItPolicyItPolicy;

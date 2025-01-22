@@ -30,9 +30,8 @@
     },
     "File1": {
       "type": "media",
-      "multiple": false,
+      "multiple": true,
       "required": false,
-      "private": true,
       "allowedTypes": [
         "files"
       ]

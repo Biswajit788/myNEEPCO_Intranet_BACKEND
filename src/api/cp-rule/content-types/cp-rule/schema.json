@@ -4,7 +4,8 @@
   "info": {
     "singularName": "cp-rule",
     "pluralName": "cp-rules",
-    "displayName": "CpRule"
+    "displayName": "CpRule",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -20,22 +21,20 @@
       "required": true
     },
     "File": {
-      "allowedTypes": [
-        "files"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
     },
     "File1": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
       "type": "media",
-      "multiple": false
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
     }
   }
 }

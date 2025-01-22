@@ -9,10 +9,22 @@ module.exports = [
       headers: '*',
     },
   },
+  {
+    name: 'global::rateLimit',
+    config: {
+      // Add any configuration options for rateLimit middleware
+    },
+  },
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
   'strapi::session',
   'strapi::favicon',
-  'strapi::public',
+  {
+    name: 'global::protectUploads',
+    config: {
+      // Add any configuration options for protectUploads middleware
+    },
+  },
+  'strapi::public', 
 ];
