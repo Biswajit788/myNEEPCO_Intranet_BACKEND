@@ -2,6 +2,15 @@ module.exports = {
   routes: [
     {
       method: 'POST',
+      path: '/auth/register',
+      handler: 'auth-custom.register',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'POST',
       path: '/auth/login-employee',
       handler: 'auth-custom.loginWithEmployeeCode',
       config: {
@@ -30,7 +39,16 @@ module.exports = {
     {
       method: 'POST',
       path: '/auth/forgot-password',
-      handler: 'auth-custom.forgotPassword', // Ensure this matches the controller method
+      handler: 'auth-custom.forgotPassword',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'GET',
+      path: '/auth/email-confirmation',
+      handler: 'auth-custom.emailConfirmation',
       config: {
         policies: [],
         middlewares: [],
