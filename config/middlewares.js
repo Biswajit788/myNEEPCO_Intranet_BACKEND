@@ -1,30 +1,44 @@
 module.exports = [
-  'strapi::logger',
   'strapi::errors',
   'strapi::security',
+  'strapi::poweredBy',
   {
     name: 'strapi::cors',
     config: {
-      origin: '*',
-      headers: '*',
+      origin: ['https://10.3.0.57'],
+      headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+      methods: ['GET', 'POST', 'OPTIONS'],
     },
   },
+
+  'strapi::logger',
+  'strapi::query',
+  {
+    name: 'strapi::body',
+    config: {
+      enabled: true,
+      multipart: true,
+      jsonLimit: '5mb',
+      formLimit: '5mb',
+      textLimit: '5mb',
+    },
+  },
+  // General API Rate Limit
   {
     name: 'global::rateLimit',
     config: {
-      // Add any configuration options for rateLimit middleware
+
     },
   },
-  'strapi::poweredBy',
-  'strapi::query',
-  'strapi::body',
-  'strapi::session',
-  'strapi::favicon',
   {
     name: 'global::protectUploads',
-    config: {
-      // Add any configuration options for protectUploads middleware
-    },
+    config: {},
   },
-  'strapi::public', 
+  {
+    name: 'global::upload',
+    config: {},
+  },
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
 ];

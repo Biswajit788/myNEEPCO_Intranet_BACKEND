@@ -31,10 +31,11 @@ const config = {
  tutorials: false,
  // Disavle notifications about new Strapi releases
  notifications: { release: false },
+ 
 };
 
 const bootstrap = (app) => {
-  console.log(app);
+  //console.log(app);
 };
 
 export default {
